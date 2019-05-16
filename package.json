@@ -1,0 +1,66 @@
+{
+	"name": "git-diff-and-merge-tool",
+	"displayName": "Git Diff and Merge Tool",
+	"description": "Launch git difftool and mergetool from VSCode.",
+	"version": "1.0.0",
+	"author": {
+        "name": "David Rickard",
+        "email": "david.rickard@gmail.com"
+    },
+	"publisher": "david-rickard",
+	"repository": "https://github.com/RandomEngy/VSCodeGitDiffAndMergeTool",
+	"bugs": {
+		"url": "https://github.com/RandomEngy/VSCodeGitDiffAndMergeTool/issues"
+	},
+	"engines": {
+		"vscode": "^1.32.0"
+	},
+	"categories": [
+		"Other"
+	],
+	"license": "MIT",
+	"activationEvents": [
+		"onCommand:gitdiffandmergetool.merge",
+		"onCommand:gitdiffandmergetool.diff"
+	],
+	"main": "./out/extension.js",
+	"contributes": {
+		"commands": [
+			{
+				"command": "gitdiffandmergetool.merge",
+				"title": "Launch merge tool"
+			},
+			{
+				"command": "gitdiffandmergetool.diff",
+				"title": "Launch diff tool"
+			}
+		],
+		"menus": {
+			"scm/resourceState/context": [
+				{
+					"command": "gitdiffandmergetool.merge",
+					"when": "scmProvider == git && scmResourceGroup == merge"
+				},
+				{
+					"command": "gitdiffandmergetool.diff",
+					"when": "scmProvider == git"
+				}
+			]
+		}
+	},
+	"dependencies": {
+		"simple-git": "^1.113.0"
+	},
+	"scripts": {
+		"vscode:prepublish": "npm run compile",
+		"compile": "tsc  -p ./",
+		"lint": "tslint -p ./",
+		"watch": "tsc -watch -p ./"
+	},
+	"devDependencies": {
+		"@types/node": "^8.10.25",
+		"tslint": "^5.16.0",
+		"typescript": "^3.4.5",
+		"@types/vscode": "^1.32.0"
+	}
+}
