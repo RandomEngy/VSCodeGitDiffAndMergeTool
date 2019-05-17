@@ -4,9 +4,9 @@
 	"description": "Launch git difftool and mergetool from VSCode.",
 	"version": "1.0.0",
 	"author": {
-        "name": "David Rickard",
-        "email": "david.rickard@gmail.com"
-    },
+		"name": "David Rickard",
+		"email": "david.rickard@gmail.com"
+	},
 	"publisher": "david-rickard",
 	"repository": "https://github.com/RandomEngy/VSCodeGitDiffAndMergeTool",
 	"bugs": {
@@ -24,6 +24,7 @@
 		"onCommand:gitdiffandmergetool.diff"
 	],
 	"main": "./out/extension.js",
+	"icon": "images/icon-128x128.png",
 	"contributes": {
 		"commands": [
 			{
