@@ -23,10 +23,11 @@ For example, this sets up Beyond Compare 4 on Windows:
     cmd = \"C:\\Program Files\\Beyond Compare 4\\bcomp.exe\" \"$LOCAL\" \"$REMOTE\"
 [merge]
     tool = beyondcompare4
+[mergetool]
+    keepbackup = false
 [mergetool "beyondcompare4"]
     cmd = \"C:\\Program Files\\Beyond Compare 4\\bcomp.exe\" \"$REMOTE\" \"$LOCAL\" \"$BASE\" \"$MERGED\"
     trustexitcode = true
-    keepbackup = false
 ```
 
 `keepbackup = false` prevents the system from creating `.orig` backup files after a merge. `trustexitcode = true` tells Git that the diff tool's exit code can be trusted to determine the outcome of the merge.
