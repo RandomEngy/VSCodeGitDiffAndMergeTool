@@ -2,10 +2,8 @@
 // Import the module and reference it with the alias vscode in your code below
 import * as vscode from 'vscode';
 
-import { exec } from 'child_process';
-
-// this method is called when your extension is activated
-// your extension is activated the very first time the command is executed
+// This method is called when your extension is activated
+// Your extension is activated the very first time the command is executed
 export function activate(context: vscode.ExtensionContext) {
 	function getItemPath(projectPath: string, param: any): string | null
 	{
@@ -46,20 +44,20 @@ export function activate(context: vscode.ExtensionContext) {
 	let diffCommand = vscode.commands.registerCommand('gitdiffandmergetool.diff', (param: any) => {
 		executeOperation(
 			param,
-			(targetFile: string) => { return ['difftool', '-y', 'head', targetFile] },
-			(targetFile: string) => { return 'Launching diff tool for ' + targetFile });
+			(targetFile: string) => { return ['difftool', '-y', 'head', targetFile]; },
+			(targetFile: string) => { return 'Launching diff tool for ' + targetFile; });
 	});
 
 	let mergeCommand = vscode.commands.registerCommand('gitdiffandmergetool.merge', async (param: any) => {
 		executeOperation(
 			param,
-			(targetFile: string) => { return ['mergetool', '-y', targetFile] },
-			(targetFile: string) => { return 'Launching merge tool for ' + targetFile });
+			(targetFile: string) => { return ['mergetool', '-y', targetFile]; },
+			(targetFile: string) => { return 'Launching merge tool for ' + targetFile; });
 	});
 
 	context.subscriptions.push(mergeCommand);
 	context.subscriptions.push(diffCommand);
 }
 
-// this method is called when your extension is deactivated
+// This method is called when your extension is deactivated
 export function deactivate() {}

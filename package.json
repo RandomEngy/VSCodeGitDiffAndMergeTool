@@ -50,18 +50,20 @@
 		}
 	},
 	"dependencies": {
-		"simple-git": "^1.113.0"
+		"simple-git": "^1.132.0"
 	},
 	"scripts": {
 		"vscode:prepublish": "npm run compile",
-		"compile": "tsc  -p ./",
-		"lint": "tslint -p ./",
+		"compile": "tsc -p ./",
+		"lint": "eslint src/**",
 		"watch": "tsc -watch -p ./"
 	},
 	"devDependencies": {
-		"@types/node": "^8.10.25",
-		"tslint": "^5.16.0",
-		"typescript": "^3.4.5",
-		"@types/vscode": "^1.32.0"
+		"@types/node": "^13.13.0",
+		"@types/vscode": "^1.44.0",
+		"@typescript-eslint/eslint-plugin": "^2.28.0",
+		"@typescript-eslint/parser": "^2.28.0",
+		"eslint": "^6.8.0",
+		"typescript": "^3.8.3"
 	}
 }
