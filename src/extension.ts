@@ -5,39 +5,49 @@ import * as vscode from 'vscode';
 // This method is called when your extension is activated
 // Your extension is activated the very first time the command is executed
 export function activate(context: vscode.ExtensionContext) {
-	function getItemPath(projectPath: string, param: any): string | null
-	{
-  		var targetFile = param._resourceUri.fsPath.replace(projectPath, '');
+	function getRelativeItemPath(projectPath: string, fullTargetFilePath: string): string | null {
+  		var relativeFilePath = fullTargetFilePath.replace(projectPath, '');
 		// remove first / or \
-		if(targetFile[0] === '/' || targetFile[0] === '\\') {
-			targetFile = targetFile.slice(1, targetFile.length );
+		if(relativeFilePath[0] === '/' || relativeFilePath[0] === '\\') {
+			relativeFilePath = relativeFilePath.slice(1, relativeFilePath.length );
 		}
 	
-		return targetFile;
+		return relativeFilePath;
 	}
 
 	async function executeOperation(
 		commandParam: any,
 		gitArgumentsFunc: (targetFile: string) => string[],
-		infoMessageFunc: (targetFile: string) => string) {
+		infoMessageFunc: (targetFile: string) => string): Promise<void> {
+        const fullTargetFilePath: string = commandParam.resourceUri.fsPath;
+        
 		const simpleGit = await import('simple-git');
 		if (vscode.workspace.workspaceFolders) {
-			const projectPath = vscode.workspace.workspaceFolders[0].uri.fsPath;
-			var targetFile = getItemPath(projectPath, commandParam);
-			if (targetFile === null) {
-				vscode.window.showWarningMessage('Could not get target path.');
-				return;
-			}
+            // Look through the workspace folders and find the one that has our file.
+            for (let workspaceFolder of vscode.workspace.workspaceFolders) {
+                const projectPath = workspaceFolder.uri.fsPath;
+                if (fullTargetFilePath.startsWith(projectPath)) {
+                    var targetFile = getRelativeItemPath(projectPath, fullTargetFilePath);
+                    if (targetFile === null) {
+                        vscode.window.showWarningMessage('Could not get target path.');
+                        return;
+                    }
+        
+                    vscode.window.showInformationMessage(infoMessageFunc(targetFile));
+        
+                    simpleGit(projectPath).raw(
+                        gitArgumentsFunc(targetFile),
+                        (err: any, result: any) => {
+                            if(err) {
+                                vscode.window.showWarningMessage(err);
+                            }
+                        });
+                    
+                    return;
+                }
+            }
 
-			vscode.window.showInformationMessage(infoMessageFunc(targetFile));
-
-			simpleGit(projectPath).raw(
-				gitArgumentsFunc(targetFile),
-				(err: any, result: any) => {
-					if(err) {
-						vscode.window.showWarningMessage(err);
-					}
-				});
+            vscode.window.showWarningMessage('Could not find workspace for ' + fullTargetFilePath);
 		}
 	}
 

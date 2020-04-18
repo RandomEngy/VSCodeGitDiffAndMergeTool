@@ -2,7 +2,7 @@
 	"name": "git-diff-and-merge-tool",
 	"displayName": "Git Diff and Merge Tool",
 	"description": "Launch git difftool and mergetool from VSCode.",
-	"version": "1.0.2",
+	"version": "1.0.3",
 	"author": {
 		"name": "David Rickard",
 		"email": "david.rickard@gmail.com"
