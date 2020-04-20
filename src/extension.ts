@@ -54,7 +54,7 @@ export function activate(context: vscode.ExtensionContext) {
 	let diffCommand = vscode.commands.registerCommand('gitdiffandmergetool.diff', (param: any) => {
 		executeOperation(
 			param,
-			(targetFile: string) => { return ['difftool', '-y', 'head', targetFile]; },
+			(targetFile: string) => { return ['difftool', '-y', 'HEAD', targetFile]; },
 			(targetFile: string) => { return 'Launching diff tool for ' + targetFile; });
 	});
 
