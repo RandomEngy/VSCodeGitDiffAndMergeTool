@@ -6,12 +6,12 @@ import * as vscode from 'vscode';
 // Your extension is activated the very first time the command is executed
 export function activate(context: vscode.ExtensionContext) {
 	function getRelativeItemPath(projectPath: string, fullTargetFilePath: string): string | null {
-  		var relativeFilePath = fullTargetFilePath.replace(projectPath, '');
+		var relativeFilePath = fullTargetFilePath.replace(projectPath, '');
 		// remove first / or \
-		if(relativeFilePath[0] === '/' || relativeFilePath[0] === '\\') {
-			relativeFilePath = relativeFilePath.slice(1, relativeFilePath.length );
+		if (relativeFilePath[0] === '/' || relativeFilePath[0] === '\\') {
+			relativeFilePath = relativeFilePath.slice(1, relativeFilePath.length);
 		}
-	
+
 		return relativeFilePath;
 	}
 
@@ -24,38 +24,38 @@ export function activate(context: vscode.ExtensionContext) {
 			return;
 		}
 
-        const fullTargetFilePath: string = commandParam.resourceUri.fsPath;
-        
+		const fullTargetFilePath: string = commandParam.resourceUri.fsPath;
+
 		const simpleGit = await import('simple-git');
 		if (vscode.workspace.workspaceFolders) {
-            // Look through the workspace folders and find the one that has our file.
-            for (let workspaceFolder of vscode.workspace.workspaceFolders) {
-                const projectPath = workspaceFolder.uri.fsPath;
-                if (fullTargetFilePath.startsWith(projectPath)) {
-                    var targetFile = getRelativeItemPath(projectPath, fullTargetFilePath);
-                    if (targetFile === null) {
-                        vscode.window.showErrorMessage('Could not get target path.');
-                        return;
-                    }
-        
+			// Look through the workspace folders and find the one that has our file.
+			for (let workspaceFolder of vscode.workspace.workspaceFolders) {
+				const projectPath = workspaceFolder.uri.fsPath;
+				if (fullTargetFilePath.startsWith(projectPath)) {
+					var targetFile = getRelativeItemPath(projectPath, fullTargetFilePath);
+					if (targetFile === null) {
+						vscode.window.showErrorMessage('Could not get target path.');
+						return;
+					}
+
 					const notifyOnOpen = vscode.workspace.getConfiguration('git-diff-and-merge-tool').get('showNotificationOnOpen');
 					if (notifyOnOpen) {
 						vscode.window.showInformationMessage(infoMessageFunc(targetFile));
 					}
-        
-                    simpleGit(projectPath).raw(
-                        gitArgumentsFunc(targetFile),
-                        (err: any, result: any) => {
-                            if(err) {
-                                vscode.window.showWarningMessage(err);
-                            }
-                        });
-                    
-                    return;
-                }
-            }
 
-            vscode.window.showErrorMessage('Could not find workspace for ' + fullTargetFilePath);
+					simpleGit(projectPath).raw(
+						gitArgumentsFunc(targetFile),
+						(err: any, result: any) => {
+							if (err) {
+								vscode.window.showWarningMessage(err);
+							}
+						});
+
+					return;
+				}
+			}
+
+			vscode.window.showErrorMessage('Could not find workspace for ' + fullTargetFilePath);
 		}
 	}
 
@@ -78,4 +78,4 @@ export function activate(context: vscode.ExtensionContext) {
 }
 
 // This method is called when your extension is deactivated
-export function deactivate() {}
+export function deactivate() { }
