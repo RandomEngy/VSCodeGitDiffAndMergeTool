@@ -33,7 +33,10 @@ export function activate(context: vscode.ExtensionContext) {
                         return;
                     }
         
-                    vscode.window.showInformationMessage(infoMessageFunc(targetFile));
+					const notifyOnOpen = vscode.workspace.getConfiguration('git-diff-and-merge-tool').get('showNotificationOnOpen');
+					if (notifyOnOpen) {
+						vscode.window.showInformationMessage(infoMessageFunc(targetFile));
+					}
         
                     simpleGit(projectPath).raw(
                         gitArgumentsFunc(targetFile),

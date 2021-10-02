@@ -47,6 +47,16 @@
 					"when": "scmProvider == git"
 				}
 			]
+		},
+		"configuration": {
+			"title": "Git Diff and Merge Tool",
+			"properties": {
+				"git-diff-and-merge-tool.showNotificationOnOpen": {
+					"type": "boolean",
+					"default": "true",
+					"description": "Show a notification when opening the diff or merge tool."
+				}
+			}
 		}
 	},
 	"dependencies": {
