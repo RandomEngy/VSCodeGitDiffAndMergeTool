@@ -31,3 +31,10 @@ For example, this sets up Beyond Compare 4 on Windows:
 ```
 
 `keepbackup = false` prevents the system from creating `.orig` backup files after a merge. `trustexitcode = true` tells Git that the diff tool's exit code can be trusted to determine the outcome of the merge.
+
+## Changelog
+
+### 1.0.5
+2021-10-02
+- Added configuration option to disable the notification on launching the tool.
+- Added error notification if VSCode fails to provide the command parameter, which can sometimes happen when the merge conflict list is being refreshed.

@@ -19,6 +19,11 @@ export function activate(context: vscode.ExtensionContext) {
 		commandParam: any,
 		gitArgumentsFunc: (targetFile: string) => string[],
 		infoMessageFunc: (targetFile: string) => string): Promise<void> {
+		if (!commandParam) {
+			vscode.window.showErrorMessage('Could not launch merge tool. VSCode did not supply command parameters. Try again in a few seconds.');
+			return;
+		}
+
         const fullTargetFilePath: string = commandParam.resourceUri.fsPath;
         
 		const simpleGit = await import('simple-git');
@@ -29,7 +34,7 @@ export function activate(context: vscode.ExtensionContext) {
                 if (fullTargetFilePath.startsWith(projectPath)) {
                     var targetFile = getRelativeItemPath(projectPath, fullTargetFilePath);
                     if (targetFile === null) {
-                        vscode.window.showWarningMessage('Could not get target path.');
+                        vscode.window.showErrorMessage('Could not get target path.');
                         return;
                     }
         
@@ -50,7 +55,7 @@ export function activate(context: vscode.ExtensionContext) {
                 }
             }
 
-            vscode.window.showWarningMessage('Could not find workspace for ' + fullTargetFilePath);
+            vscode.window.showErrorMessage('Could not find workspace for ' + fullTargetFilePath);
 		}
 	}
 
