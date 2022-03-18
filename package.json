@@ -60,7 +60,7 @@
 		}
 	},
 	"dependencies": {
-		"simple-git": "^1.132.0"
+		"simple-git": "^3.3.0"
 	},
 	"scripts": {
 		"vscode:prepublish": "npm run compile",
